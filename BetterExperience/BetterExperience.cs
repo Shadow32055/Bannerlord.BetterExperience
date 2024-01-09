@@ -15,9 +15,6 @@ namespace BetterExperience {
         public static MCMSettings Settings { get; private set; } = new MCMSettings();
         public static string ModName { get; private set; } = "ForgotToSet";
         public static int MaxLevel { get; private set; } = 0;
-        public static float Power { get; private set; } = 0;
-        public static int Base { get; private set; } = 0;
-
         public static int[] Levels { get; private set; } = new int[0];
 
         private bool isInitialized = false;
@@ -67,8 +64,6 @@ namespace BetterExperience {
         //THIRD
         protected override void OnGameStart(Game game, IGameStarter gameStarter) {
             MaxLevel = CalculateMaxLevel();
-            Power = Settings.Power;
-            Base = Settings.Base;
 
             Levels = BuildLevelArray();
 
@@ -94,7 +89,7 @@ namespace BetterExperience {
 
             for (int i = 0; i <= MaxLevel; i++) {
 
-                levels[i] = (int)(Base * (long)MathF.Pow(i, Power));
+                levels[i] = (int)(Settings.Base * (long)MathF.Pow(i, Settings.Power));
             }
 
             return levels;

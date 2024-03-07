@@ -36,7 +36,7 @@ namespace BetterExperience {
 
                 isInitialized = true;
             } catch (Exception e) {
-                NotifyHelper.ReportError(ModName, "OnSubModuleLoad threw exception " + e);
+                NotifyHelper.WriteError(ModName, "OnSubModuleLoad threw exception " + e);
             }
         }
 
@@ -52,12 +52,12 @@ namespace BetterExperience {
 
                 Settings = MCMSettings.Instance ?? throw new NullReferenceException("Settings are null");
 
-                NotifyHelper.ChatMessage(ModName + " Loaded.", MsgType.Good);
+                NotifyHelper.WriteMessage(ModName + " Loaded.", MsgType.Good);
                 Integrations.BetterHealthLoaded = true;
 
                 isLoaded = true;
             } catch (Exception e) {
-                NotifyHelper.ReportError(ModName, "OnBeforeInitialModuleScreenSetAsRoot threw exception " + e);
+                NotifyHelper.WriteError(ModName, "OnBeforeInitialModuleScreenSetAsRoot threw exception " + e);
             }
         }
 
@@ -68,7 +68,7 @@ namespace BetterExperience {
             Levels = BuildLevelArray();
 
             if (Settings.DisplayMax)
-                NotifyHelper.ChatMessage(new TextObject(RefValues.LevelReadoutText) + MaxLevel.ToString(), MsgType.Good);
+                NotifyHelper.WriteMessage(new TextObject(RefValues.LevelReadoutText) + MaxLevel.ToString(), MsgType.Good);
         }
 
         private static int CalculateMaxLevel() {

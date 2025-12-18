@@ -1,4 +1,5 @@
-﻿using BetterExperience.Localizations;
+﻿using BetterCore.Utils;
+using BetterExperience.Localizations;
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Attributes.v2;
 using MCM.Abstractions.Base.Global;
@@ -7,16 +8,35 @@ namespace BetterExperience.Settings {
 
     public class MCMSettings : AttributeGlobalSettings<MCMSettings> {
 
-        [SettingPropertyGroup(RefValues.ExperienceText)]
-        [SettingPropertyInteger(RefValues.BaseText, 1, 4000, "0", Order = 0, RequireRestart = false, HintText = RefValues.BaseHint)]
-        public int Base { get; set; } = 1000;
+        private int _base = 1000;
+        private float _power = 2.8f;
 
         [SettingPropertyGroup(RefValues.ExperienceText)]
-        [SettingPropertyFloatingInteger(RefValues.PowerText, 0.1f, 4f, "0.0", Order = 0, RequireRestart = false, HintText = RefValues.PowerHint)]
-        public float Power { get; set; } = 2.8f;
+        [SettingPropertyInteger(RefValues.BaseText, 1, 4000, "0", Order = 0, RequireRestart = true, HintText = RefValues.BaseHint)]
+        public int Base {
+            get => _base;
+            set {
+                if (_base != value) {
+                    _base = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         [SettingPropertyGroup(RefValues.ExperienceText)]
-        [SettingPropertyBool(RefValues.DisplayLevlText, Order = 0, RequireRestart = false, HintText = RefValues.DisplayLevelHint)]
+        [SettingPropertyFloatingInteger(RefValues.PowerText, 0.1f, 4f, "0.0", Order = 0, RequireRestart = true, HintText = RefValues.PowerHint)]
+        public float Power {
+            get => _power;
+            set {
+                if (_power != value) {
+                    _power = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        [SettingPropertyGroup(RefValues.ExperienceText)]
+        [SettingPropertyBool(RefValues.DisplayLevlText, Order = 0, RequireRestart = true, HintText = RefValues.DisplayLevelHint)]
         public bool DisplayMax { get; set; } = false;
 
 

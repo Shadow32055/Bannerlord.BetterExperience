@@ -52,12 +52,22 @@ namespace BetterExperience {
 
                 Settings = MCMSettings.Instance ?? throw new NullReferenceException("Settings are null");
 
+                // Subscribe to property changes
+                Settings.PropertyChanged += OnSettingsPropertyChanged;
+
                 NotifyHelper.WriteMessage(ModName + " Loaded.", MsgType.Good);
-                Integrations.BetterHealthLoaded = true;
+                Integrations.BetterExperienceLoaded = true;
 
                 isLoaded = true;
             } catch (Exception e) {
                 NotifyHelper.WriteError(ModName, "OnBeforeInitialModuleScreenSetAsRoot threw exception " + e);
+            }
+        }
+
+        private void OnSettingsPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
+            if (e.PropertyName == nameof(MCMSettings.Base) || e.PropertyName == nameof(MCMSettings.Power)) {
+                int newMaxLevel = CalculateMaxLevel();
+                NotifyHelper.WriteMessage($"Settings changed. New max level: {newMaxLevel}", MsgType.Alert);
             }
         }
 
@@ -76,7 +86,7 @@ namespace BetterExperience {
             long levelXp = 0;
             int level = 0;
             while (totalXp < int.MaxValue) {
-                levelXp = Settings.Base * (long)MathF.Pow(level, Settings.Power);
+                levelXp = (int)Settings.Base * (long)MathF.Pow(level, Settings.Power);
                 totalXp += levelXp;
                 level++;
             }
@@ -87,9 +97,8 @@ namespace BetterExperience {
         private static int[] BuildLevelArray() {
             int[] levels = new int[MaxLevel + 1];
 
-            for (int i = 0; i <= MaxLevel; i++) {
-
-                levels[i] = (int)(Settings.Base * (long)MathF.Pow(i, Settings.Power));
+            for (int level = 0; level <= MaxLevel; level++) {
+                levels[level] = (int)(Settings.Base * (long)MathF.Pow(level, Settings.Power));
             }
 
             return levels;

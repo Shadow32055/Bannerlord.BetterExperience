@@ -8,8 +8,8 @@
         public const string BaseText = "{=BEE_gha8ca}Base";
         public const string BaseHint = "{=BEE_GtIuji}Base value for experience equation (base*(level^power)";
 
-        public const string DisplayLevlText = "{=BEE_licHNP}Display Max Level at Start";
-        public const string DisplayLevelHint = "{=BEE_xACH0R}Easy readout of the max level with current settings displayed at game start";
+        public const string DisplayLevelInformationText = "{=BEE_licHNP}Display Level Information at Start";
+        public const string DisplayLevelInformationHint = "{=BEE_xACH0R}Easy readout of the levels with current settings displayed at game start";
 
         public const string LevelReadoutText = "{=BEE_1mf9am}Max level is ";
     }

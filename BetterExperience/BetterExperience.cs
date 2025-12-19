@@ -1,12 +1,10 @@
 ﻿using BetterCore.Utils;
-using BetterExperience.Localizations;
 using BetterExperience.Settings;
 using HarmonyLib;
 using System;
 using System.Reflection;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
-using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
 
 namespace BetterExperience {
@@ -77,8 +75,14 @@ namespace BetterExperience {
 
             Levels = BuildLevelArray();
 
-            if (Settings.DisplayMax)
-                NotifyHelper.WriteMessage(new TextObject(RefValues.LevelReadoutText) + MaxLevel.ToString(), MsgType.Good);
+            if (Settings.DisplayLevelInformation) {
+				NotifyHelper.WriteMessage($"Using Base: {Settings.Base}, Power: {Settings.Power}", MsgType.Alert);
+
+				for (int lvl = 0; lvl < Levels.Length; lvl++) {
+                    NotifyHelper.WriteMessage($"Level {lvl} XP: {Levels[lvl]}", MsgType.Alert);
+                }
+                //NotifyHelper.WriteMessage(new TextObject(RefValues.LevelReadoutText) + MaxLevel.ToString(), MsgType.Good);
+            }
         }
 
         private static int CalculateMaxLevel() {
@@ -98,7 +102,7 @@ namespace BetterExperience {
             int[] levels = new int[MaxLevel + 1];
 
             for (int level = 0; level <= MaxLevel; level++) {
-                levels[level] = (int)(Settings.Base * (long)MathF.Pow(level, Settings.Power));
+                levels[level] = (int)Math.Round(Settings.Base * MathF.Pow(level, Settings.Power));
             }
 
             return levels;

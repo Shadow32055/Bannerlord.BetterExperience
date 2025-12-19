@@ -36,8 +36,8 @@ namespace BetterExperience.Settings {
         }
 
         [SettingPropertyGroup(RefValues.ExperienceText)]
-        [SettingPropertyBool(RefValues.DisplayLevlText, Order = 0, RequireRestart = true, HintText = RefValues.DisplayLevelHint)]
-        public bool DisplayMax { get; set; } = false;
+        [SettingPropertyBool(RefValues.DisplayLevelInformationText, Order = 0, RequireRestart = true, HintText = RefValues.DisplayLevelInformationHint)]
+        public bool DisplayLevelInformation { get; set; } = false;
 
 
         public override string Id { get { return base.GetType().Assembly.GetName().Name; } }
